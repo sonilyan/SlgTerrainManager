@@ -125,7 +125,8 @@ public class TerrainManager : MonoBehaviour
             return;
         foreach (var qTree in root.Child)
         {
-            GizomoDrawQtree(qTree);
+            if (qTree.es.Count > 0)
+                GizomoDrawQtree(qTree);
         }
     }
 
