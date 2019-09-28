@@ -1,0 +1,9 @@
+/.idea
+/Temp
+/Library
+/Logs
+/obj
+/Packages
+/ProjectSettings
+/*.sln
+/*.csproj
