@@ -15,7 +15,7 @@ public class TerrainManager : MonoBehaviour
 
     public int minSize = 10;
     public int depth = 5;
-    
+
     public int count = 200;
     public bool debugAlways = true;
     public bool debugHideDraw = false;
@@ -23,11 +23,11 @@ public class TerrainManager : MonoBehaviour
 
     public Mesh mesh;
     public Material material;
-    
+
     void Start()
     {
-        int mapSize = minSize * (int)Mathf.Pow(2,depth);
-        
+        int mapSize = minSize * (int) Mathf.Pow(2, depth);
+
         Debug.Log($"map size = {mapSize}");
         root = new QTree(Vector2.zero, mapSize, 0);
 
@@ -36,7 +36,7 @@ public class TerrainManager : MonoBehaviour
         {
             es[i] = new TestEntity()
             {
-                Pos = new Vector2(Random.Range(-mapSize/2, mapSize/2), Random.Range(-mapSize/2, mapSize/2)),
+                Pos = new Vector2(Random.Range(-mapSize / 2, mapSize / 2), Random.Range(-mapSize / 2, mapSize / 2)),
                 Type = Random.Range(0, 100),
                 Depth = depth,
             };
@@ -111,22 +111,23 @@ public class TerrainManager : MonoBehaviour
             if (root.depth == depth)
             {
                 Gizmos.color = Color.red;
+                if (root.es.Count > 0)
+                    Gizmos.DrawCube(new Vector3(root.Bounds.center.x, 0.01f * root.depth, root.Bounds.center.z),
+                        root.Bounds.size - new Vector3(0.1f, 0, 0.1f));
             }
             else
             {
                 Gizmos.color = debugColor[root.depth];
+                Gizmos.DrawCube(new Vector3(root.Bounds.center.x, 0.01f * root.depth, root.Bounds.center.z),
+                    root.Bounds.size - new Vector3(0.1f, 0, 0.1f));
             }
-
-            Gizmos.DrawCube(new Vector3(root.Bounds.center.x, 0.01f * root.depth, root.Bounds.center.z),
-                root.Bounds.size - new Vector3(0.1f,0,0.1f));
         }
 
         if (root.Child == null)
             return;
         foreach (var qTree in root.Child)
         {
-            if (qTree.es.Count > 0)
-                GizomoDrawQtree(qTree);
+            GizomoDrawQtree(qTree);
         }
     }
 
